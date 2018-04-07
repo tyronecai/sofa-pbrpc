@@ -52,10 +52,10 @@ inline std::string ptime_to_string(const PTime& t)
             (int)date.year(),
             (int)date.month(),
             (int)date.day(),
-            tod.hours(),
-            tod.minutes(),
-            tod.seconds(),
-            tod.fractional_seconds());
+            (int)tod.hours(),
+            (int)tod.minutes(),
+            (int)tod.seconds(),
+            (long)tod.fractional_seconds());
     return buf; 
 }
 

@@ -5,6 +5,10 @@
 libsofa-pbrpc.a
 output/
 sofa-pbrpc-client
+
+depends.mk
+sample
+
 unit-test/libgtest.a
 unit-test/test_atomic
 unit-test/test_buffer

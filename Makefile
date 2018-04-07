@@ -5,7 +5,7 @@
 #-----------------------------------------------
 # Modify prefix to specify the directory to install sofa-pbrpc.
 #
-PREFIX=./output
+PREFIX=${THIRDPARTY}/sofa-pbrpc
 #-----------------------------------------------
 
 #-----------------------------------------------
@@ -80,7 +80,7 @@ endif
 #-----------------------------------------------
 
 INCPATH=-Isrc -I$(BOOST_HEADER_DIR) -I$(PROTOBUF_DIR)/include -I$(SNAPPY_DIR)/include -I$(ZLIB_DIR)/include
-CXXFLAGS += $(OPT) -pipe -W -Wall -fPIC -D_GNU_SOURCE -D__STDC_LIMIT_MACROS -DHAVE_SNAPPY $(INCPATH)
+CXXFLAGS += $(OPT) -pipe -W -Wall -Wno-unused-parameter -Wno-unused-function -fPIC -D_GNU_SOURCE -D__STDC_LIMIT_MACROS -DHAVE_SNAPPY $(INCPATH)
 
 LDFLAGS += -L$(ZLIB_DIR)/lib -L$(PROTOBUF_DIR)/lib/ -L$(SNAPPY_DIR)/lib/ -lprotobuf -lsnappy -lpthread -lz
 
