@@ -48,22 +48,22 @@ void glog_log_handler(
     vsnprintf(buf, 1024, fmt, ap);
     switch (level) {
       case LOG_LEVEL_FATAL:
-        LOG(FATAL) << buf;
+        LOG(FATAL) << filename << ":" << line << " " << buf;
         break;
       case LOG_LEVEL_ERROR:
-        LOG(ERROR) << buf;
+        LOG(ERROR) << filename << ":" << line << " " << buf;
         break;
       case LOG_LEVEL_WARNING:
-        LOG(WARNING) << buf;
+        LOG(WARNING) << filename << ":" << line << " " << buf;
         break;
       case LOG_LEVEL_INFO:
-        LOG(INFO) << buf;
+        LOG(INFO) << filename << ":" << line << " " << buf;
         break;
       case LOG_LEVEL_DEBUG:
-        VLOG(10) << buf;
+        VLOG(10) << filename << ":" << line << " " << buf;
         break;
       case LOG_LEVEL_TRACE:
-        VLOG(20) << buf;
+        VLOG(20) << filename << ":" << line << " " << buf;
         break;
       default:
         LOG(INFO) << buf;
