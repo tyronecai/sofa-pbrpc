@@ -32,7 +32,7 @@ CXXFLAGS ?= -DSOFA_PBRPC_ENABLE_DETAILED_LOGGING
 
 include depends.mk
 
-LIB=libsofa-pbrpc.a
+LIB=libsofa-pbrpc.so
 LIB_SRC=$(wildcard src/sofa/pbrpc/*.cc)
 LIB_OBJ=$(patsubst %.cc,%.o,$(LIB_SRC))
 PROTO=$(wildcard src/sofa/pbrpc/*.proto)
@@ -82,7 +82,7 @@ endif
 INCPATH=-Isrc -I$(BOOST_HEADER_DIR) -I$(PROTOBUF_DIR)/include -I$(SNAPPY_DIR)/include -I$(ZLIB_DIR)/include
 CXXFLAGS += $(OPT) -pipe -W -Wall -Wno-unused-parameter -Wno-unused-function -fPIC -D_GNU_SOURCE -D__STDC_LIMIT_MACROS -DHAVE_SNAPPY $(INCPATH)
 
-LDFLAGS += -L$(ZLIB_DIR)/lib -L$(PROTOBUF_DIR)/lib/ -L$(SNAPPY_DIR)/lib/ -lprotobuf -lsnappy -lpthread -lz
+LDFLAGS += -lpthread -L$(ZLIB_DIR)/lib -L$(PROTOBUF_DIR)/lib -L$(SNAPPY_DIR)/lib64 -L$(GLOG_DIR)/lib -Wl,-rpath,$(ZLIB_DIR)/lib -Wl,-rpath,$(PROTOBUF_DIR)/lib -Wl,-rpath,$(SNAPPY_DIR)/lib64 -Wl,-rpath,$(GLOG_DIR)/lib -lz -lprotobuf -lsnappy -lglog
 
 .PHONY: check_depends build rebuild install clean
 
@@ -91,9 +91,9 @@ all: build
 check_depends:
 	@if [ ! -f "$(BOOST_HEADER_DIR)/boost/smart_ptr.hpp" ]; then echo "ERROR: need boost header"; exit 1; fi
 	@if [ ! -f "$(PROTOBUF_DIR)/include/google/protobuf/message.h" ]; then echo "ERROR: need protobuf header"; exit 1; fi
-	@if [ ! -f "$(PROTOBUF_DIR)/lib/libprotobuf.a" ]; then echo "ERROR: need protobuf lib"; exit 1; fi
+	@if [ ! -f "$(PROTOBUF_DIR)/lib/libprotobuf.so" ]; then echo "ERROR: need protobuf lib"; exit 1; fi
 	@if [ ! -f "$(SNAPPY_DIR)/include/snappy.h" ]; then echo "ERROR: need snappy header"; exit 1; fi
-	@if [ ! -f "$(SNAPPY_DIR)/lib/libsnappy.a" ]; then echo "ERROR: need snappy lib"; exit 1; fi
+	@if [ ! -f "$(SNAPPY_DIR)/lib64/libsnappy.so" ]; then echo "ERROR: need snappy lib"; exit 1; fi
 
 clean:
 	rm -f $(LIB) $(BIN) $(LIB_OBJ) $(PROTO_OBJ) $(BIN_OBJ) $(PROTO_HEADER) $(PROTO_SRC)
@@ -104,11 +104,11 @@ $(PROTO_OBJ): $(PROTO_HEADER)
 
 $(LIB_OBJ): $(PROTO_HEADER)
 
-$(LIB): $(LIB_OBJ) $(PROTO_OBJ)
-	ar crs $@ $(LIB_OBJ) $(PROTO_OBJ)
+$(LIB): $(LIB_OBJ)
+	$(CXX) -shared -o $@ $(LIB_OBJ) $(LDFLAGS)
 
 $(BIN): $(LIB) $(BIN_OBJ)
-	$(CXX) $(BIN_OBJ) -o $@ $(LIB) $(LDFLAGS)
+	$(CXX) -o $@ $(BIN_OBJ) $(LIB_OBJ) $(LDFLAGS)
 
 %.pb.cc %.pb.h: %.proto
 	${PROTOBUF_DIR}/bin/protoc --proto_path=./src --proto_path=${PROTOBUF_DIR}/include --cpp_out=./src $<
