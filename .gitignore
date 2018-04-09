@@ -3,6 +3,7 @@
 .project
 .settings/
 libsofa-pbrpc.a
+libsofa-pbrpc.so
 output/
 sofa-pbrpc-client
 

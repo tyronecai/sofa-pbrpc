@@ -80,7 +80,7 @@ endif
 
 #-----------------------------------------------
 
-INCPATH=-Isrc -I$(BOOST_HEADER_DIR) -I$(PROTOBUF_DIR)/include -I$(SNAPPY_DIR)/include -I$(ZLIB_DIR)/include
+INCPATH=-Isrc -I$(BOOST_HEADER_DIR) -I$(PROTOBUF_DIR)/include -I$(SNAPPY_DIR)/include -I$(ZLIB_DIR)/include -I$(GLOG_DIR)/include -I$(GFLAGS_DIR)/include
 CXXFLAGS += $(OPT) -pipe -W -Wall -Wno-unused-parameter -Wno-unused-function -fPIC -D_GNU_SOURCE -D__STDC_LIMIT_MACROS -DHAVE_SNAPPY $(INCPATH)
 
 LDFLAGS += -lpthread -L$(ZLIB_DIR)/lib -L$(PROTOBUF_DIR)/lib -L$(SNAPPY_DIR)/lib64 -L$(GLOG_DIR)/lib -Wl,-rpath,$(ZLIB_DIR)/lib -Wl,-rpath,$(PROTOBUF_DIR)/lib -Wl,-rpath,$(SNAPPY_DIR)/lib64 -Wl,-rpath,$(GLOG_DIR)/lib -lz -lprotobuf -lsnappy -lglog

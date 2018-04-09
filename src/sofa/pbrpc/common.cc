@@ -15,6 +15,8 @@
 #include <sofa/pbrpc/common.h>
 #include <sofa/pbrpc/ptime.h>
 
+#include "glog/logging.h"
+
 namespace sofa {
 namespace pbrpc {
 
@@ -37,6 +39,36 @@ LogLevel get_log_level()
 void set_log_level(LogLevel level)
 {
     s_log_level = level;
+}
+
+void glog_log_handler(
+    LogLevel level, const char* filename, int line, const char *fmt, va_list ap)
+{
+    char buf[1024];
+    vsnprintf(buf, 1024, fmt, ap);
+    switch (level) {
+      case LOG_LEVEL_FATAL:
+        LOG(FATAL) << buf;
+        break;
+      case LOG_LEVEL_ERROR:
+        LOG(ERROR) << buf;
+        break;
+      case LOG_LEVEL_WARNING:
+        LOG(WARNING) << buf;
+        break;
+      case LOG_LEVEL_INFO:
+        LOG(INFO) << buf;
+        break;
+      case LOG_LEVEL_DEBUG:
+        VLOG(10) << buf;
+        break;
+      case LOG_LEVEL_TRACE:
+        VLOG(20) << buf;
+        break;
+      default:
+        LOG(INFO) << buf;
+        break;
+    }
 }
 
 void default_log_handler(
@@ -85,7 +117,7 @@ void null_log_handler(LogLevel, const char*, int, const char *, va_list)
     // Nothing
 }
 
-static LogHandler* s_log_handler = default_log_handler;
+static LogHandler* s_log_handler = glog_log_handler;
 
 void log_handler(LogLevel level, const char* filename, int line, const char *fmt, ...)
 {

@@ -13,6 +13,7 @@ echo "PROTOBUF_DIR=${DEPS_PREFIX}/protobuf" >> depends.mk
 echo "SNAPPY_DIR=${DEPS_PREFIX}/snappy" >> depends.mk
 echo "ZLIB_DIR=${DEPS_PREFIX}/zlib" >> depends.mk
 echo "GLOG_DIR=${DEPS_PREFIX}/glog" >> depends.mk
+echo "GFLAGS_DIR=${DEPS_PREFIX}/gflags" >> depends.mk
 
 
 make clean

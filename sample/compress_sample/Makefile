@@ -7,7 +7,7 @@
 ##
 ## Check file exist:
 ##   $(SOFA_PBRPC)/include/sofa/pbrpc/pbrpc.h 
-##   $(SOFA_PBRPC)/lib/libsofa-pbrpc.a 
+##   $(SOFA_PBRPC)/lib/libsofa-pbrpc.so 
 ##
 SOFA_PBRPC=../../../sofa-pbrpc
 #-----------------------------------------------
@@ -32,8 +32,8 @@ INCPATH=-I. -I$(SOFA_PBRPC)/include -I$(PROTOBUF_DIR)/include \
 		-I$(SNAPPY_DIR)/include -I$(ZLIB_DIR)/include
 CXXFLAGS += $(OPT) -pipe -W -Wall -fPIC -D_GNU_SOURCE -D__STDC_LIMIT_MACROS $(INCPATH)
 
-LIBRARY=$(SOFA_PBRPC)/lib/libsofa-pbrpc.a $(PROTOBUF_DIR)/lib/libprotobuf.so $(SNAPPY_DIR)/lib64/libsnappy.so
-LDFLAGS += -L$(ZLIB_DIR)/lib -lpthread -lz
+LIBRARY=
+LDFLAGS += -L$(ZLIB_DIR)/lib -L$(PROTOBUF_DIR)/lib -L$(SOFA_PBRPC)/lib -L$(GLOG_DIR)/lib -Wl,-rpath,$(ZLIB_DIR)/lib -Wl,-rpath,$(PROTOBUF_DIR)/lib -Wl,-rpath,$(SOFA_PBRPC)/lib -Wl,-rpath,$(GLOG_DIR)/lib -lpthread -lz -lsofa-pbrpc -lglog -lprotobuf
 
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Linux)
@@ -61,7 +61,7 @@ check_depends:
 	@if [ ! -f "$(SNAPPY_DIR)/include/snappy.h" ]; then echo "ERROR: need snappy header"; exit 1; fi
 	@if [ ! -f "$(SNAPPY_DIR)/lib64/libsnappy.so" ]; then echo "ERROR: need snappy lib"; exit 1; fi
 	@if [ ! -f "$(SOFA_PBRPC)/include/sofa/pbrpc/pbrpc.h" ]; then echo "ERROR: need sofa-pbrpc header"; exit 1; fi
-	@if [ ! -f "$(SOFA_PBRPC)/lib/libsofa-pbrpc.a" ]; then echo "ERROR: need sofa-pbrpc lib"; exit 1; fi
+	@if [ ! -f "$(SOFA_PBRPC)/lib/libsofa-pbrpc.so" ]; then echo "ERROR: need sofa-pbrpc lib"; exit 1; fi
 
 clean:
 	@rm -f $(BIN) *.o *.pb.*

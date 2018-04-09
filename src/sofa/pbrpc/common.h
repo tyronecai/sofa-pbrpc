@@ -56,10 +56,9 @@ enum LogLevel {
     LOG_LEVEL_FATAL   = 0,
     LOG_LEVEL_ERROR   = 1,
     LOG_LEVEL_WARNING = 2,
-    LOG_LEVEL_NOTICE  = 3,
     LOG_LEVEL_INFO    = 3,
-    LOG_LEVEL_TRACE   = 4,
-    LOG_LEVEL_DEBUG   = 5,
+    LOG_LEVEL_DEBUG   = 4,
+    LOG_LEVEL_TRACE   = 5,
 };
 
 typedef void LogHandler(LogLevel level, const char* filename, int line,

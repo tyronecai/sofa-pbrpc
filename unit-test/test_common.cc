@@ -22,7 +22,7 @@ protected:
 
 TEST_F(CommonTest, test_log)
 {
-    sofa::pbrpc::internal::set_log_level(sofa::pbrpc::LOG_LEVEL_NOTICE);
+    sofa::pbrpc::internal::set_log_level(sofa::pbrpc::LOG_LEVEL_INFO);
     int flag_notice = 0;
     SLOG(NOTICE, "notice message: %d: %s", ++flag_notice, "should be logged");
     ASSERT_EQ(1, flag_notice);
