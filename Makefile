@@ -35,6 +35,7 @@ include depends.mk
 LIB=libsofa-pbrpc.so
 LIB_SRC=$(wildcard src/sofa/pbrpc/*.cc)
 LIB_OBJ=$(patsubst %.cc,%.o,$(LIB_SRC))
+
 PROTO=$(wildcard src/sofa/pbrpc/*.proto)
 PROTO_SRC=$(patsubst %.proto,%.pb.cc,$(PROTO))
 PROTO_HEADER=$(patsubst %.proto,%.pb.h,$(PROTO))
@@ -109,9 +110,6 @@ $(LIB): $(LIB_OBJ)
 
 $(BIN): $(LIB) $(BIN_OBJ)
 	$(CXX) -o $@ $(BIN_OBJ) $(LIB_OBJ) $(LDFLAGS)
-
-%.pb.cc %.pb.h: %.proto
-	${PROTOBUF_DIR}/bin/protoc --proto_path=./src --proto_path=${PROTOBUF_DIR}/include --cpp_out=./src $<
 
 %.o: %.cc
 	$(CXX) $(CXXFLAGS) -c $< -o $@
