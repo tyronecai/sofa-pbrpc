@@ -3,63 +3,57 @@
 // found in the LICENSE file.
 
 #include <signal.h>
-#include <unistd.h>
 #include <sofa/pbrpc/pbrpc.h>
+#include <unistd.h>
 #include "echo_service.pb.h"
 
-class EchoServerImpl : public sofa::pbrpc::test::EchoServer
-{
-public:
-    EchoServerImpl() {}
-    virtual ~EchoServerImpl() {}
+class EchoServerImpl : public sofa::pbrpc::test::EchoServer {
+ public:
+  EchoServerImpl() {}
+  virtual ~EchoServerImpl() {}
 
-private:
-    virtual void Echo(google::protobuf::RpcController* /*controller*/,
-                      const sofa::pbrpc::test::EchoRequest* request,
-                      sofa::pbrpc::test::EchoResponse* response,
-                      google::protobuf::Closure* done)
-    {
-        SLOG(INFO, "Echo(): request message: %s", request->message().c_str());
-        response->set_message("echo message: " + request->message());
-        done->Run();
-    }
+ private:
+  virtual void Echo(google::protobuf::RpcController* /*controller*/,
+                    const sofa::pbrpc::test::EchoRequest* request,
+                    sofa::pbrpc::test::EchoResponse* response,
+                    google::protobuf::Closure* done) {
+    SLOG(INFO, "Echo(): request message: %s", request->message().c_str());
+    response->set_message("echo message: " + request->message());
+    done->Run();
+  }
 };
 
 volatile bool g_quit = false;
 
-static void SignalIntHandler(int /* sig */)
-{
-    g_quit = true;
-}
+static void SignalIntHandler(int /* sig */) { g_quit = true; }
 
-int main(int /*argc*/, char** /*argv*/)
-{
-    SOFA_PBRPC_SET_LOG_LEVEL(INFO);
+int main(int /*argc*/, char** /*argv*/) {
+  SOFA_PBRPC_SET_LOG_LEVEL(INFO);
 
-    // Define an rpc server.
-    sofa::pbrpc::RpcServerOptions options;
-    sofa::pbrpc::RpcServer rpc_server(options);
+  // Define an rpc server.
+  sofa::pbrpc::RpcServerOptions options;
+  sofa::pbrpc::RpcServer rpc_server(options);
 
-    // Start rpc server.
-    if (!rpc_server.Start("0.0.0.0:12321")) {
-        SLOG(ERROR, "start server failed");
-        return EXIT_FAILURE;
-    }
-    
-    sofa::pbrpc::test::EchoServer* echo_service = new EchoServerImpl();
-    if (!rpc_server.RegisterService(echo_service)) {
-        SLOG(ERROR, "export service failed");
-        return EXIT_FAILURE;
-    }
+  // Start rpc server.
+  if (!rpc_server.Start("0.0.0.0:12321")) {
+    SLOG(ERROR, "start server failed");
+    return EXIT_FAILURE;
+  }
 
-    signal(SIGINT, SignalIntHandler);
-    signal(SIGTERM, SignalIntHandler);
+  sofa::pbrpc::test::EchoServer* echo_service = new EchoServerImpl();
+  if (!rpc_server.RegisterService(echo_service)) {
+    SLOG(ERROR, "export service failed");
+    return EXIT_FAILURE;
+  }
 
-    while (!g_quit) {
-        sleep(1);
-    }
+  signal(SIGINT, SignalIntHandler);
+  signal(SIGTERM, SignalIntHandler);
 
-    return EXIT_SUCCESS;
+  while (!g_quit) {
+    sleep(1);
+  }
+
+  return EXIT_SUCCESS;
 }
 
 /* vim: set ts=4 sw=4 sts=4 tw=100 */

@@ -12,9 +12,9 @@ PREFIX=${THIRDPARTY}/sofa-pbrpc
 # Uncomment exactly one of the lines labelled (A), (B), and (C) below
 # to switch between compilation modes.
 #
-OPT ?= -O2        # (A) Production use (optimized mode)
+# OPT ?= -O2        # (A) Production use (optimized mode)
 # OPT ?= -g2      # (B) Debug mode, generate full line-level debugging symbols
-# OPT ?= -O2 -g2  # (C) Profiling mode: opt, but generate debugging symbols
+OPT ?= -O2 -g2  # (C) Profiling mode: opt, but generate debugging symbols
 #-----------------------------------------------
 
 #-----------------------------------------------
