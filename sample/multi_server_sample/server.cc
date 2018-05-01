@@ -20,7 +20,7 @@ private:
                       sofa::pbrpc::test::EchoResponse* response,
                       google::protobuf::Closure* done)
     {
-        SLOG(NOTICE, "Echo(): request message from %s: %s",
+        SLOG(INFO, "Echo(): request message from %s: %s",
                 static_cast<sofa::pbrpc::RpcController*>(controller)->RemoteAddress().c_str(),
                 request->message().c_str());
         response->set_message("echo message: " + request->message());
@@ -42,7 +42,7 @@ void thread_dest_func()
 
 int main(int argc, char** argv)
 {
-    SOFA_PBRPC_SET_LOG_LEVEL(NOTICE);
+    SOFA_PBRPC_SET_LOG_LEVEL(INFO);
 
     if (argc < 3) {
         fprintf(stderr, "USAGE: %s <ip> <port>\n", argv[0]);

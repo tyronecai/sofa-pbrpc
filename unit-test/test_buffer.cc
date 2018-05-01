@@ -523,7 +523,7 @@ TEST_F(PBSerDeserTest, SerDeser)
     int meta_size = os->ByteCount() - header_size;
     ASSERT_TRUE(_test_data.SerializeToZeroCopyStream(os.get()));
     int data_size = os->ByteCount() - header_size - meta_size;
-    SLOG(NOTICE, "os->TotalCapacity = %d, os->ByteCount = %d",
+    SLOG(INFO, "os->TotalCapacity = %d, os->ByteCount = %d",
             os->TotalCapacity(), os->ByteCount());
     int total_size = header_size + meta_size + data_size;
 
@@ -533,7 +533,7 @@ TEST_F(PBSerDeserTest, SerDeser)
     ASSERT_EQ(0, os->ByteCount());
     ASSERT_EQ(total_size, is->TotalCount());
     ASSERT_EQ(0, is->ByteCount());
-    SLOG(NOTICE, "is->TotalCount = %d, os->ByteCount = %d",
+    SLOG(INFO, "is->TotalCount = %d, os->ByteCount = %d",
             is->TotalCount(), is->ByteCount());
 
     ASSERT_TRUE(is->Skip(header_size));
@@ -557,7 +557,7 @@ TEST_F(PBSerDeserTest, SerDeser)
     ASSERT_TRUE(new_data.SerializeToString(&new_str));
     ASSERT_EQ(old_str, new_str);
 
-    SLOG(NOTICE, "meta_size=%d, data_size=%lld", meta_size, data_size);
+    SLOG(INFO, "meta_size=%d, data_size=%lld", meta_size, data_size);
 }
 
 int main(int argc, char **argv)

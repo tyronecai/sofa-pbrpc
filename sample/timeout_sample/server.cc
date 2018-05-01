@@ -19,7 +19,7 @@ public:
                                          sofa::pbrpc::test::SleepResponse* response,
                                          google::protobuf::Closure* done)
     {
-        SLOG(NOTICE, "SleepWithServiceTimeout(): request sleep time: %d", request->sleep_time());
+        SLOG(INFO, "SleepWithServiceTimeout(): request sleep time: %d", request->sleep_time());
         Sleep(controller, request, response, done);
     }
 
@@ -28,7 +28,7 @@ public:
                                         sofa::pbrpc::test::SleepResponse* response,
                                         google::protobuf::Closure* done)
     {
-        SLOG(NOTICE, "SleepWithMethodTimeout(): request sleep time: %d", request->sleep_time());
+        SLOG(INFO, "SleepWithMethodTimeout(): request sleep time: %d", request->sleep_time());
         Sleep(controller, request, response, done);
     }
 
@@ -58,7 +58,7 @@ static void SignalIntHandler(int /* sig */)
 
 int main(int /*argc*/, char** /*argv*/)
 {
-    SOFA_PBRPC_SET_LOG_LEVEL(NOTICE);
+    SOFA_PBRPC_SET_LOG_LEVEL(INFO);
 
     // Define an rpc server.
     sofa::pbrpc::RpcServerOptions options;

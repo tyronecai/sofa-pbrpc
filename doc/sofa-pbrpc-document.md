@@ -118,7 +118,7 @@ private:
     {
         sofa::pbrpc::RpcController* cntl =
             static_cast<sofa::pbrpc::RpcController*>(controller);
-        SLOG(NOTICE, "Echo(): request message from %s: %s",
+        SLOG(INFO, "Echo(): request message from %s: %s",
             cntl->RemoteAddress().c_str(), request->message().c_str());
         response->set_message("echo message: " + request->message());
         done->Run();
@@ -136,7 +136,7 @@ done->Run()可以分派到其他线程中执行，以实现了真正的异步处
 ```c++
 int main()
 {
-    SOFA_PBRPC_SET_LOG_LEVEL(NOTICE);
+    SOFA_PBRPC_SET_LOG_LEVEL(INFO);
 
     sofa::pbrpc::RpcServerOptions options;
     options.work_thread_num = 8;
@@ -176,7 +176,7 @@ Client支持同步和异步两种调用方式：
 ```c++
 int main()
 {
-    SOFA_PBRPC_SET_LOG_LEVEL(NOTICE);
+    SOFA_PBRPC_SET_LOG_LEVEL(INFO);
     sofa::pbrpc::RpcClientOptions client_options;
     client_options.work_thread_num = 8;
     sofa::pbrpc::RpcClient rpc_client(client_options);
@@ -205,18 +205,18 @@ void EchoCallback(sofa::pbrpc::RpcController* cntl,
         sofa::pbrpc::test::EchoResponse* response,
         bool* callbacked)
 {
-    SLOG(NOTICE, "RemoteAddress=%s", cntl->RemoteAddress().c_str());
-    SLOG(NOTICE, "IsRequestSent=%s", cntl->IsRequestSent() ? "true" : "false");
+    SLOG(INFO, "RemoteAddress=%s", cntl->RemoteAddress().c_str());
+    SLOG(INFO, "IsRequestSent=%s", cntl->IsRequestSent() ? "true" : "false");
     if (cntl->IsRequestSent())
     {
-        SLOG(NOTICE, "LocalAddress=%s", cntl->LocalAddress().c_str());
-        SLOG(NOTICE, "SentBytes=%ld", cntl->SentBytes());
+        SLOG(INFO, "LocalAddress=%s", cntl->LocalAddress().c_str());
+        SLOG(INFO, "SentBytes=%ld", cntl->SentBytes());
     }
     if (cntl->Failed()) {
         SLOG(ERROR, "request failed: %s", cntl->ErrorText().c_str());
     }
     else {
-        SLOG(NOTICE, "request succeed: %s", response->message().c_str());
+        SLOG(INFO, "request succeed: %s", response->message().c_str());
     }
     delete cntl;
     delete request;
@@ -227,7 +227,7 @@ void EchoCallback(sofa::pbrpc::RpcController* cntl,
 
 int main()
 {
-    SOFA_PBRPC_SET_LOG_LEVEL(NOTICE);
+    SOFA_PBRPC_SET_LOG_LEVEL(INFO);
 
     sofa::pbrpc::RpcClientOptions client_options;
     sofa::pbrpc::RpcClient rpc_client(client_options);

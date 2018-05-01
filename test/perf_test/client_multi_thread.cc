@@ -18,7 +18,7 @@ std::string message_str = "z";
 
 void sigcatcher(int sig)
 {
-    SLOG(NOTICE, "signal catched: %d", sig);
+    SLOG(INFO, "signal catched: %d", sig);
     s_is_running = false;
 }
 
@@ -80,7 +80,7 @@ int main(int argc, char **argv)
     
     signal(SIGINT,  &sigcatcher);
     signal(SIGTERM, &sigcatcher);
-    SOFA_PBRPC_SET_LOG_LEVEL(NOTICE);
+    SOFA_PBRPC_SET_LOG_LEVEL(INFO);
     
     pthread_t threads[tn];
     pending = new sofa::pbrpc::AtomicCounter[tn];

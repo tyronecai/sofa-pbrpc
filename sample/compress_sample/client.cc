@@ -7,7 +7,7 @@
 
 int main(int /*argc*/, char** /*argv*/)
 {
-    SOFA_PBRPC_SET_LOG_LEVEL(NOTICE);
+    SOFA_PBRPC_SET_LOG_LEVEL(INFO);
 
     // Define an rpc client.
     sofa::pbrpc::RpcClientOptions client_options;
@@ -38,7 +38,7 @@ int main(int /*argc*/, char** /*argv*/)
     }
     else
     {
-        SLOG(NOTICE, "request succeed: %s", response->message().c_str());
+        SLOG(INFO, "request succeed: %s", response->message().c_str());
     }
 
     delete request;

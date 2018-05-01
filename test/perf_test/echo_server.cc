@@ -46,7 +46,7 @@ int main(int argc, char** argv)
     std::string address = argv[1] + std::string(":") + argv[2];
     int thread_num = atoi(argv[3]);
 
-    SOFA_PBRPC_SET_LOG_LEVEL(NOTICE);
+    SOFA_PBRPC_SET_LOG_LEVEL(INFO);
 
     // Define an rpc server.
     sofa::pbrpc::RpcServerOptions options;
@@ -82,7 +82,7 @@ int main(int argc, char** argv)
         elapsed_time_us = (tv2.tv_sec - tv1.tv_sec) * 1000000 + (tv2.tv_usec - tv1.tv_usec);
         if (elapsed_time_us >= print_interval_us) {
             long curr_succeed_count = static_cast<long>(s_succeed_count);
-            SLOG(NOTICE, "QPS=%ld", curr_succeed_count - last_succeed_count);
+            SLOG(INFO, "QPS=%ld", curr_succeed_count - last_succeed_count);
             last_succeed_count = curr_succeed_count;
             gettimeofday(&tv1, &tz1);
         }

@@ -31,7 +31,7 @@ static void EchoCallback(
 
 void sigcatcher(int sig)
 {
-    SLOG(NOTICE, "signal catched: %d", sig);
+    SLOG(INFO, "signal catched: %d", sig);
     s_is_running = false;
 }
 
@@ -117,7 +117,7 @@ int main(int argc, char **argv)
     signal(SIGINT,  &sigcatcher);
     signal(SIGTERM, &sigcatcher);
 
-    SOFA_PBRPC_SET_LOG_LEVEL(NOTICE);
+    SOFA_PBRPC_SET_LOG_LEVEL(INFO);
 
     // Define an rpc client.
     sofa::pbrpc::RpcClientOptions client_options;
@@ -153,7 +153,7 @@ int main(int argc, char **argv)
         elapsed_time_us = (tv2.tv_sec - tv1.tv_sec) * 1000000 + (tv2.tv_usec - tv1.tv_usec);
         long curr_succeed_count = s_succeed_count;
         if (elapsed_time_us >= print_interval_us) {
-            SLOG(NOTICE, "QPS=%lld, pending_count=%lld, timeout_count=%lld, pending_full_count=%lld",
+            SLOG(INFO, "QPS=%lld, pending_count=%lld, timeout_count=%lld, pending_full_count=%lld",
                     curr_succeed_count - last_succeed_count,
                     static_cast<long>(s_pending_count),
                     static_cast<long>(s_timeout_count),
@@ -164,9 +164,9 @@ int main(int argc, char **argv)
     }
 
     if (is_grace_exit) {
-        SLOG(NOTICE, "gracely exiting ...");
+        SLOG(INFO, "gracely exiting ...");
         while (s_pending_count > 0) {
-            SLOG(NOTICE, "pending count: %lld", static_cast<long>(s_pending_count));
+            SLOG(INFO, "pending count: %lld", static_cast<long>(s_pending_count));
             usleep(print_interval_us);
         }
     }

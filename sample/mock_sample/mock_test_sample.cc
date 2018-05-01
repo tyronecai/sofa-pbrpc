@@ -16,7 +16,7 @@ void MockEchoSuccess(::google::protobuf::RpcController* /*controller*/,
               ::google::protobuf::Message* response,
               ::google::protobuf::Closure* done)
 {
-    SLOG(NOTICE, "MockEchoSuccess() called");
+    SLOG(INFO, "MockEchoSuccess() called");
     ((EchoResponse*)response)->set_message(((EchoRequest*)request)->message());
     done->Run();
 }
@@ -26,7 +26,7 @@ void MockEchoFail(::google::protobuf::RpcController* controller,
               ::google::protobuf::Message* /*response*/,
               ::google::protobuf::Closure* done)
 {
-    SLOG(NOTICE, "MockEchoFail() called");
+    SLOG(INFO, "MockEchoFail() called");
     controller->SetFailed("mock failed");
     done->Run();
 }
@@ -37,7 +37,7 @@ protected:
     MockTest() {}
     virtual ~MockTest() {}
     virtual void SetUp() {
-        SOFA_PBRPC_SET_LOG_LEVEL(NOTICE);
+        SOFA_PBRPC_SET_LOG_LEVEL(INFO);
 
         // enable mock and register mock method
         SOFA_PBRPC_ENABLE_MOCK();
@@ -66,7 +66,7 @@ TEST_F(MockTest, test_registered_mock_sync_success)
 
     stub->Echo(cntl, request, response, NULL);
 
-    SLOG(NOTICE, "ErrorText: %s", cntl->ErrorText().c_str());
+    SLOG(INFO, "ErrorText: %s", cntl->ErrorText().c_str());
     ASSERT_FALSE(cntl->Failed());
     ASSERT_TRUE(cntl->IsRequestSent());
     ASSERT_GT(cntl->SentBytes(), 0);
@@ -105,7 +105,7 @@ TEST_F(MockTest, test_registered_mock_sync_fail)
 
 void EchoCallback(sofa::pbrpc::RpcController* cntl, bool* callbacked)
 {
-    SLOG(NOTICE, "EchoCallback(): %s", cntl->ErrorText().c_str());
+    SLOG(INFO, "EchoCallback(): %s", cntl->ErrorText().c_str());
     ASSERT_TRUE(cntl->Failed());
     ASSERT_EQ(RPC_ERROR_FROM_USER, cntl->ErrorCode());
     ASSERT_EQ("RPC_ERROR_FROM_USER: mock failed", cntl->ErrorText());

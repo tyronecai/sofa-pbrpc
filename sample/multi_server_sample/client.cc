@@ -42,7 +42,7 @@ public:
 
     void Reload() {
         sofa::pbrpc::ScopedLocker<sofa::pbrpc::MutexLock> _(_lock);
-        SLOG(NOTICE, "start reloading address list from file \"%s\"", _addr_file.c_str());
+        SLOG(INFO, "start reloading address list from file \"%s\"", _addr_file.c_str());
         // open file
         std::ifstream ifs(_addr_file.c_str(), std::ifstream::in);
         if (!ifs.good()) {
@@ -114,7 +114,7 @@ static ReloadableAddressProvider* g_address_provider;
 
 static void sigcatcher(int sig)
 {
-    SLOG(NOTICE, "signal catched: %d", sig);
+    SLOG(INFO, "signal catched: %d", sig);
     if (g_address_provider) {
         g_address_provider->Reload();
     }
@@ -122,7 +122,7 @@ static void sigcatcher(int sig)
 
 int main(int argc, char** argv)
 {
-    SOFA_PBRPC_SET_LOG_LEVEL(NOTICE);
+    SOFA_PBRPC_SET_LOG_LEVEL(INFO);
 
     if (argc < 2) {
         fprintf(stderr, "USAGE: %s <address-list-file>\n", argv[0]);
@@ -160,11 +160,11 @@ int main(int argc, char** argv)
 
         // Check if the request has been sent.
         // If has been sent, then can get the sent bytes.
-        SLOG(NOTICE, "RemoteAddress=%s", cntl->RemoteAddress().c_str());
-        SLOG(NOTICE, "IsRequestSent=%s", cntl->IsRequestSent() ? "true" : "false");
+        SLOG(INFO, "RemoteAddress=%s", cntl->RemoteAddress().c_str());
+        SLOG(INFO, "IsRequestSent=%s", cntl->IsRequestSent() ? "true" : "false");
         if (cntl->IsRequestSent()) {
-            SLOG(NOTICE, "LocalAddress=%s", cntl->LocalAddress().c_str());
-            SLOG(NOTICE, "SentBytes=%ld", cntl->SentBytes());
+            SLOG(INFO, "LocalAddress=%s", cntl->LocalAddress().c_str());
+            SLOG(INFO, "SentBytes=%ld", cntl->SentBytes());
         }
 
         // Check if failed.
@@ -172,7 +172,7 @@ int main(int argc, char** argv)
             SLOG(ERROR, "request failed: %s", cntl->ErrorText().c_str());
         }
         else {
-            SLOG(NOTICE, "request succeed: %s", response->message().c_str());
+            SLOG(INFO, "request succeed: %s", response->message().c_str());
         }
 
         // Destroy objects.

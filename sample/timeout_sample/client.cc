@@ -7,7 +7,7 @@
 
 int main(int /*argc*/, char** /*argv*/)
 {
-    SOFA_PBRPC_SET_LOG_LEVEL(NOTICE);
+    SOFA_PBRPC_SET_LOG_LEVEL(INFO);
 
     // Define an rpc client.
     sofa::pbrpc::RpcClientOptions client_options;
@@ -27,97 +27,97 @@ int main(int /*argc*/, char** /*argv*/)
         new sofa::pbrpc::test::SleepServer_Stub(&rpc_channel);
 
     // Call 1
-    SLOG(NOTICE, "----------- Call 1 ---------------------------------------");
-    SLOG(NOTICE, "Sync call SleepWithServiceTimeout(), default timeout is 2 seconds.");
-    SLOG(NOTICE, "Sleep for 1 seconds.");
-    SLOG(NOTICE, "Expect result is success.");
+    SLOG(INFO, "----------- Call 1 ---------------------------------------");
+    SLOG(INFO, "Sync call SleepWithServiceTimeout(), default timeout is 2 seconds.");
+    SLOG(INFO, "Sleep for 1 seconds.");
+    SLOG(INFO, "Expect result is success.");
     cntl->Reset();
     request->set_sleep_time(1);
     stub->SleepWithServiceTimeout(cntl, request, response, NULL);
-    SLOG(NOTICE, "Actual timeout is %lld milli-seconds.", cntl->Timeout());
+    SLOG(INFO, "Actual timeout is %lld milli-seconds.", cntl->Timeout());
     if (cntl->Failed()) {
         SLOG(ERROR, "Failed: %s", cntl->ErrorText().c_str());
     }
     else {
-        SLOG(NOTICE, "Succeed: %s", response->message().c_str());
+        SLOG(INFO, "Succeed: %s", response->message().c_str());
     }
     if (cntl->Failed()) {
         SLOG(ERROR, "!!!! unexpected result");
     }
 
     // Call 2
-    SLOG(NOTICE, "----------- Call 2 ---------------------------------------");
-    SLOG(NOTICE, "Sync call SleepWithServiceTimeout(), default timeout is 2 seconds.");
-    SLOG(NOTICE, "Sleep for 3 seconds.");
-    SLOG(NOTICE, "Expect result is failure.");
+    SLOG(INFO, "----------- Call 2 ---------------------------------------");
+    SLOG(INFO, "Sync call SleepWithServiceTimeout(), default timeout is 2 seconds.");
+    SLOG(INFO, "Sleep for 3 seconds.");
+    SLOG(INFO, "Expect result is failure.");
     cntl->Reset();
     request->set_sleep_time(3);
     stub->SleepWithServiceTimeout(cntl, request, response, NULL);
-    SLOG(NOTICE, "Actual timeout is %lld milli-seconds.", cntl->Timeout());
+    SLOG(INFO, "Actual timeout is %lld milli-seconds.", cntl->Timeout());
     if (cntl->Failed()) {
         SLOG(ERROR, "Failed: %s", cntl->ErrorText().c_str());
     }
     else {
-        SLOG(NOTICE, "Succeed: %s", response->message().c_str());
+        SLOG(INFO, "Succeed: %s", response->message().c_str());
     }
     if (!cntl->Failed()) {
         SLOG(ERROR, "!!!! unexpected result");
     }
 
     // Call 3
-    SLOG(NOTICE, "----------- Call 3 ---------------------------------------");
-    SLOG(NOTICE, "Sync call SleepWithMethodTimeout(), default timeout is 4 seconds.");
-    SLOG(NOTICE, "Sleep for 3 seconds.");
-    SLOG(NOTICE, "Expect result is success.");
+    SLOG(INFO, "----------- Call 3 ---------------------------------------");
+    SLOG(INFO, "Sync call SleepWithMethodTimeout(), default timeout is 4 seconds.");
+    SLOG(INFO, "Sleep for 3 seconds.");
+    SLOG(INFO, "Expect result is success.");
     cntl->Reset();
     request->set_sleep_time(3);
     stub->SleepWithMethodTimeout(cntl, request, response, NULL);
-    SLOG(NOTICE, "Actual timeout is %lld milli-seconds.", cntl->Timeout());
+    SLOG(INFO, "Actual timeout is %lld milli-seconds.", cntl->Timeout());
     if (cntl->Failed()) {
         SLOG(ERROR, "Failed: %s", cntl->ErrorText().c_str());
     }
     else {
-        SLOG(NOTICE, "Succeed: %s", response->message().c_str());
+        SLOG(INFO, "Succeed: %s", response->message().c_str());
     }
     if (cntl->Failed()) {
         SLOG(ERROR, "!!!! unexpected result");
     }
 
     // Call 4
-    SLOG(NOTICE, "----------- Call 4 ---------------------------------------");
-    SLOG(NOTICE, "Sync call SleepWithMethodTimeout(), default timeout is 4 seconds.");
-    SLOG(NOTICE, "Sleep for 5 seconds.");
-    SLOG(NOTICE, "Expect result is failure.");
+    SLOG(INFO, "----------- Call 4 ---------------------------------------");
+    SLOG(INFO, "Sync call SleepWithMethodTimeout(), default timeout is 4 seconds.");
+    SLOG(INFO, "Sleep for 5 seconds.");
+    SLOG(INFO, "Expect result is failure.");
     cntl->Reset();
     request->set_sleep_time(5);
     stub->SleepWithMethodTimeout(cntl, request, response, NULL);
-    SLOG(NOTICE, "Actual timeout is %lld milli-seconds.", cntl->Timeout());
+    SLOG(INFO, "Actual timeout is %lld milli-seconds.", cntl->Timeout());
     if (cntl->Failed()) {
         SLOG(ERROR, "Failed: %s", cntl->ErrorText().c_str());
     }
     else {
-        SLOG(NOTICE, "Succeed: %s", response->message().c_str());
+        SLOG(INFO, "Succeed: %s", response->message().c_str());
     }
     if (!cntl->Failed()) {
         SLOG(ERROR, "!!!! unexpected result");
     }
 
     // Call 5
-    SLOG(NOTICE, "----------- Call 5 ---------------------------------------");
-    SLOG(NOTICE, "Sync call SleepWithMethodTimeout(), default timeout is 4 seconds.");
-    SLOG(NOTICE, "Set timeout of RpcController to 1 seconds.");
-    SLOG(NOTICE, "Sleep for 3 seconds.");
-    SLOG(NOTICE, "Expect result is failure.");
+    SLOG(INFO, "----------- Call 5 ---------------------------------------");
+    SLOG(INFO, "Sync call SleepWithMethodTimeout(), default timeout is 4 seconds.");
+    SLOG(INFO, "Set timeout of RpcController to 1 seconds.");
+    SLOG(INFO, "Sleep for 3 seconds.");
+    SLOG(INFO, "Expect result is failure.");
     cntl->Reset();
     cntl->SetTimeout(1000);
     request->set_sleep_time(3);
     stub->SleepWithMethodTimeout(cntl, request, response, NULL);
-    SLOG(NOTICE, "Actual timeout is %lld milli-seconds.", cntl->Timeout());
+    SLOG(INFO, "Actual timeout is %lld milli-seconds.", cntl->Timeout());
     if (cntl->Failed()) {
         SLOG(ERROR, "Failed: %s", cntl->ErrorText().c_str());
     }
     else {
-        SLOG(NOTICE, "Succeed: %s", response->message().c_str());
+        SLOG(INFO, "Succeed: %s", response->message().c_str());
     }
     if (!cntl->Failed()) {
         SLOG(ERROR, "!!!! unexpected result");

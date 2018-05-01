@@ -33,7 +33,7 @@ int main(int argc, char** argv)
     std::string message_str;
     message_str.resize(100, 'z');
 
-    SOFA_PBRPC_SET_LOG_LEVEL(NOTICE);
+    SOFA_PBRPC_SET_LOG_LEVEL(INFO);
 
     // Define an rpc client.
     sofa::pbrpc::RpcClientOptions client_options;
@@ -78,7 +78,7 @@ int main(int argc, char** argv)
             continue;
         }
         elapsed_time_us = (tv2.tv_sec - tv1.tv_sec) * 1000000 + (tv2.tv_usec - tv1.tv_usec);
-        SLOG(NOTICE, " * %d * request succeed, remote_address=%s, elapsed_time_in_us=%ld",
+        SLOG(INFO, " * %d * request succeed, remote_address=%s, elapsed_time_in_us=%ld",
                 count, cntl->RemoteAddress().c_str(), elapsed_time_us);
     }
     
